@@ -3,9 +3,8 @@
 # 🇮🇳 ProcureBharat (प्रोक्योर भारत)
 ### AI-Powered Indian Standards (BIS) Intelligence for Smarter Public & Enterprise Procurement
 
-[![React](https://img.shields.io/badge/React-19.0-61DAFB?logo=react&logoColor=black)](https://react.dev/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Vite](https://img.shields.io/badge/Vite-6.2-646CFF?logo=vite&logoColor=white)](https://vitejs.dev/)
+[![Next.js](https://img.shields.io/badge/Next.js-16.0-000000?logo=nextdotjs&logoColor=white)](https://nextjs.org/)
+[![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
 [![BIS Standards](https://img.shields.io/badge/Standards-Bureau%20of%20Indian%20Standards-orange)](https://www.bis.gov.in/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
@@ -85,12 +84,11 @@ ProcureBharat includes comprehensive domain knowledge across major procurement c
 
 ## 🛠️ Technology Stack
 
-- **Frontend Framework**: [React 19](https://react.dev/) + [TypeScript](https://www.typescriptlang.org/)
-- **Build Tool**: [Vite 6](https://vitejs.dev/)
-- **Styling**: [Tailwind CSS v4](https://tailwindcss.com/)
-- **Icons**: [Lucide React](https://lucide.dev/)
-- **Animations**: [Motion](https://motion.dev/)
-- **Intelligence Engine**: Client-side semantic standards correlator & specification analyzer
+- **Frontend**: [Next.js](https://nextjs.org/), [Tailwind CSS v4](https://tailwindcss.com/), [JavaScript (ES6+)](https://developer.mozilla.org/en-US/docs/Web/JavaScript), [Lucide React](https://lucide.dev/)
+- **Backend**: [Node.js](https://nodejs.org/) / [Express.js](https://expressjs.com/), REST APIs
+- **Database**: [Supabase](https://supabase.com/), [PostgreSQL](https://www.postgresql.org/), [pgvector](https://github.com/pgvector/pgvector), Supabase Auth, RLS (Row Level Security), Supabase Storage
+- **AI & Analytics Stack**: LLM API (OpenAI), Vector Search, RAG (Retrieval-Augmented Generation), Embedding Model, Semantic Search
+- **Development & Deployment**: Git, GitHub, Postman, [Vercel](https://vercel.com/) (Frontend), [Render](https://render.com/) (Backend)
 
 ---
 
@@ -125,7 +123,7 @@ http://localhost:3000
 ```bash
 npm run build
 ```
-The optimized production bundle will be generated in the `dist/` directory.
+The optimized production build will be generated in the `.next/` directory.
 
 ---
 
@@ -133,33 +131,35 @@ The optimized production bundle will be generated in the `dist/` directory.
 
 ```
 ProcureBharat/
-├── index.html                   # HTML entry point with Plus Jakarta Sans & JetBrains Mono
-├── package.json                 # Project dependencies and npm scripts
-├── tsconfig.json                # TypeScript compiler configuration
-├── vite.config.ts               # Vite configuration with Tailwind CSS v4 plugin
+├── package.json                 # Next.js scripts and dependencies
+├── jsconfig.json                # Path alias configuration (@/*)
+├── next.config.mjs              # Next.js configuration
+├── postcss.config.mjs           # Tailwind CSS v4 PostCSS configuration
 ├── src/
-│   ├── main.tsx                 # Application mount point
-│   ├── App.tsx                  # Root component, tab routing, and state orchestration
-│   ├── index.css                # Global styles and Tailwind imports
-│   ├── types/
-│   │   └── standards.ts         # TypeScript definitions for Standards, Reports, and Clauses
+│   ├── app/
+│   │   ├── layout.jsx           # Root layout with fonts & metadata
+│   │   ├── page.jsx             # Next.js page entry
+│   │   └── globals.css          # Tailwind CSS v4 imports & theme variables
+│   ├── App.jsx                  # Main application state orchestration
 │   ├── data/
-│   │   └── standardsDataset.ts  # Curated database of BIS standards, amendments, & samples
+│   │   └── standardsDataset.js  # Curated database of BIS standards, amendments, & samples
 │   ├── services/
-│   │   └── aiRecommendationEngine.ts # Rule-based semantic correlation & analysis engine
+│   │   └── aiRecommendationEngine.js # Semantic standards correlation & analysis engine
+│   ├── types/
+│   │   └── standards.js         # Standards definitions and constants
 │   └── components/
-│       ├── layout/              # Header, Sidebar, and App Navigation
-│       ├── dashboard/           # Home dashboard with metrics and quick actions
-│       ├── finder/              # Standards AI Finder view
-│       ├── documents/           # Tender document analyzer and clause parser
-│       ├── results/             # Analysis breakdown and recommendations
-│       ├── compliance/          # GeM and public procurement compliance checklist
-│       ├── gap-analysis/        # Gap detection and missing clause recommendations
-│       ├── product-groups/      # Product category browsing
-│       ├── saved/               # Bookmarked standards management
-│       ├── history/             # Audit logs and previous analysis history
-│       ├── report/              # Report viewer and export modal
-│       └── help/                # Guidance and user documentation
+│       ├── layout/              # Header, Sidebar, and App Navigation (.jsx)
+│       ├── dashboard/           # Home dashboard with metrics and quick actions (.jsx)
+│       ├── finder/              # Standards AI Finder view (.jsx)
+│       ├── documents/           # Tender document analyzer and clause parser (.jsx)
+│       ├── results/             # Analysis breakdown and recommendations (.jsx)
+│       ├── compliance/          # GeM and public procurement compliance checklist (.jsx)
+│       ├── gap-analysis/        # Gap detection and missing clause recommendations (.jsx)
+│       ├── product-groups/      # Product category browsing (.jsx)
+│       ├── saved/               # Bookmarked standards management (.jsx)
+│       ├── history/             # Audit logs and previous analysis history (.jsx)
+│       ├── report/              # Report viewer and export modal (.jsx)
+│       └── help/                # Guidance and user documentation (.jsx)
 ```
 
 ---
