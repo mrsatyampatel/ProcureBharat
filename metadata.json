@@ -1,0 +1,8 @@
+{
+  "name": "Remix StandardsAI",
+  "description": "AI-Powered Indian Standards Intelligence for Smarter Procurement - Identify applicable BIS standards, allied references, amendments, and mandatory certifications.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
