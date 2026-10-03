@@ -3,6 +3,9 @@
 # 🇮🇳 ProcureBharat (प्रोक्योर भारत)
 ### AI-Powered Indian Standards (BIS) Intelligence for Smarter Public & Enterprise Procurement
 
+**Built with ❤️ by [SATYAM PATEL](https://github.com/mrsatyampatel) ..**
+
+[![Built by Satyam Patel](https://img.shields.io/badge/Built%20with%20%E2%9D%A4%EF%B8%8F%20by-SATYAM%20PATEL-red.svg)](https://github.com/mrsatyampatel)
 [![Next.js](https://img.shields.io/badge/Next.js-16.0-000000?logo=nextdotjs&logoColor=white)](https://nextjs.org/)
 [![JavaScript](https://img.shields.io/badge/JavaScript-ES6+-F7DF1E?logo=javascript&logoColor=black)](https://developer.mozilla.org/en-US/docs/Web/JavaScript)
 [![TailwindCSS](https://img.shields.io/badge/TailwindCSS-v4-06B6D4?logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
@@ -197,6 +200,13 @@ Contributions are welcome! If you would like to expand the standards database, a
 
 ---
 
+## 👨‍💻 Author
+
+**Satyam Patel**
+- GitHub: [@mrsatyampatel](https://github.com/mrsatyampatel)
+
+---
+
 ## 📜 License
 
 Distributed under the **MIT License**. See `LICENSE` for more information.
@@ -204,5 +214,5 @@ Distributed under the **MIT License**. See `LICENSE` for more information.
 ---
 
 <div align="center">
-  <sub>Built with ❤️ for Indian Public Procurement & Atmanirbhar Bharat.</sub>
+  <sub>Built with ❤️ by <a href="https://github.com/mrsatyampatel"><b>SATYAM PATEL</b></a> ..</sub>
 </div>
