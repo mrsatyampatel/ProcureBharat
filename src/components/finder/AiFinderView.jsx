@@ -13,6 +13,97 @@ import {
   Award,
   ChevronRight
 } from "lucide-react";
+const PROCESSING_STEPS = [
+  "Parsing technical specification clauses & semantic tokens...",
+  "Identifying primary product category & BIS Technical Committee jurisdiction...",
+  "Correlating electrical, mechanical, environmental & safety parameters...",
+  "Cross-referencing 25,000+ Bureau of Indian Standards (BIS) Gazette records...",
+  "Evaluating normative cross-references, test protocols & lab test methods...",
+  "Auditing supersession & outdated legacy standards (IS 1944 / IS 12269 / IS 2925:1975)...",
+  "Synthesizing mandatory Quality Control Orders (QCO) & GFR 2017 compliance report..."
+];
+
+const DEMO_SCENARIOS = [
+  {
+    id: "scenario-led",
+    title: "Smart LED Street Lighting RFP",
+    subtitle: "City Municipal Corporation Tender with Ingress & Photobiological Requirements",
+    badge: "High Impact Demo",
+    badgeColor: "bg-blue-100 text-[#1e40af] border-blue-200",
+    highlights: ["IS 10322 (Part 5/Sec 3)", "IS 16107 (Part 2/Sec 1)", "IS 15885 (Driver)", "Outdated IS 1944 Auto-Fix", "440V Grid Gap Alert"],
+    type: "Tender Specification",
+    lang: "English",
+    query: `TENDER SPECIFICATION: Supply, Installation, Testing and Commissioning of 10,000 Nos. Outdoor LED Street Light Luminaires (90W and 120W) for Municipal Smart City Road Network.
+1. Electrical & Optical Requirements:
+   - System Efficacy: Minimum 120 Lumens/Watt at 5700K Correlated Colour Temperature (CCT), CRI >= 70.
+   - Operating Voltage: 140V to 280V AC, 50 Hz. Must withstand 440V AC phase-to-phase high voltage condition.
+   - Power Factor: >= 0.95, Total Harmonic Distortion (THD) <= 10%.
+   - Ingress Protection: Minimum IP66 protection for optical and control gear compartments. Impact resistance IK08.
+   - Surge Protection: Inbuilt 10 kV / 5 kA surge protection device (SPD).
+2. Referenced Standards in Legacy Draft:
+   - Luminaire construction per IS 1944:1970 and IS 10322.
+   - Mandatory BIS CRS Registration and Quality Control Order compliance under MeitY Gazette notification.`
+  },
+  {
+    id: "scenario-transformer",
+    title: "1000 kVA Distribution Transformer",
+    subtitle: "State Electricity Board Substation RFP with BEE Loss Limits",
+    badge: "Heavy Engineering",
+    badgeColor: "bg-indigo-100 text-indigo-800 border-indigo-200",
+    highlights: ["IS 1180 (Part 1):2014", "IS 335 (Insulating Oil)", "CPRI Dynamic Short Circuit Mandate", "BEE Star Level"],
+    type: "Tender Specification",
+    lang: "English",
+    query: `TENDER SPECIFICATION: Supply of 1000 kVA, 11 kV / 433 V, 3-Phase, 50 Hz Outdoor Type Mineral Oil Immersed Step-Down Distribution Transformers.
+1. Rating & Losses: 1000 kVA, Dyn11 vector group, maximum total losses at 50% load <= 2000W, at 100% load <= 6500W (BEE 3-Star level).
+2. Core & Windings: Prime grade CRGO laser scribed electrical steel, electrolytic copper winding with Class A insulation.
+3. Transformer Oil: High grade uninhibited mineral insulating oil conforming to IS 335:2018 with dielectric breakdown voltage >= 60 kV.
+4. Mandatory Compliance: Valid BIS ISI Mark license under IS 1180 (Part 1):2014. Dynamic Short Circuit test certificate from CPRI/ERDA required.`
+  },
+  {
+    id: "scenario-helmet",
+    title: "Industrial Safety Helmets (PPE)",
+    subtitle: "Underground Metro Rail Tunneling & Mining Worker Safety Gear",
+    badge: "Personal Protective Equipment",
+    badgeColor: "bg-amber-100 text-amber-900 border-amber-200",
+    highlights: ["IS 2925:1984", "5.0 kN Shock Attenuation", "2000V Dielectric Test", "Legacy IS 2925:1975 Warning"],
+    type: "Technical Specification",
+    lang: "English",
+    query: `TECHNICAL SPECIFICATION: Supply of 5000 Nos. Industrial Safety Helmets (Non-Metallic) for Underground Metro Rail Tunneling and High-Risk Infrastructure Construction.
+1. Shell: Non-metallic high density polyethylene (HDPE) shell with UV stabilization and 6-point textile suspension cradle.
+2. Performance Criteria:
+   - Impact Attenuation: Transmitted force shall not exceed 5.0 kN when tested as per BIS norms.
+   - Penetration Resistance: Pointed 3 kg steel conical striker drop test compliance.
+   - Electrical Insulation: High voltage resistance test at 2000V AC with leakage current <= 1.2 mA.
+3. Certification: Mandatory ISI Mark under IS 2925 with valid BIS license number. Reference to obsolete IS 2925:1975 noted in annexure.`
+  },
+  {
+    id: "scenario-cement",
+    title: "OPC 53 Grade Structural Cement",
+    subtitle: "National Highway Expressways & Prestressed Concrete Bridge Girders",
+    badge: "Civil Infrastructure",
+    badgeColor: "bg-slate-100 text-slate-800 border-slate-300",
+    highlights: ["IS 269:2015", "53 MPa 28-Day Strength", "Superseded IS 12269/8112 Unification", "Mandatory ISI Bag Marking"],
+    type: "Product Description",
+    lang: "English",
+    query: `TECHNICAL REQUIREMENT: Procurement of 25,000 Metric Tonnes of Ordinary Portland Cement (OPC 53 Grade) for Highway Bridge Superstructure and Prestressed Concrete Girders.
+- 28-day Compressive Strength minimum 53 MPa (IS 12269:1987 referenced in contractor submission).
+- Initial setting time >= 30 minutes, Final setting time <= 600 minutes.
+- Blaine fineness minimum 225 m²/kg, Soundness Le-Chatelier expansion <= 10 mm.
+- Mandatory BIS ISI certification mark on every 50 kg HDPE bag.`
+  },
+  {
+    id: "scenario-hindi",
+    title: "🇮🇳 एलईडी स्ट्रीट लाइट खरीद (Hindi Query)",
+    subtitle: "भारतीय मानक खोज - प्राकृतिक भाषा हिन्दी प्रश्न",
+    badge: "Multi-Lingual NLP",
+    badgeColor: "bg-emerald-100 text-emerald-900 border-emerald-200",
+    highlights: ["IS 10322 (Part 5/Sec 3)", "IS 16107 (LED)", "अनिवार्य बीआईएस प्रमाणन", "120 lm/W दक्षता"],
+    type: "Natural Language Query",
+    lang: "Hindi",
+    query: `एलईडी स्ट्रीट लाइट के लिए कौन से भारतीय मानक लागू हैं? नगर पालिका की सड़कों के लिए 1000 एलईडी स्ट्रीट लाइटों की खरीद करनी है जिसमें न्यूनतम 120 लुमेन/वाट दक्षता, आईपी66 जलरोधक सुरक्षा, 10 केवी सर्ज प्रोटेक्शन और बीआईएस (BIS) अनिवार्य प्रमाणन शामिल होना चाहिए।`
+  }
+];
+
 export const AiFinderView = ({
   initialQuery = "",
   onAnalysisComplete,
@@ -24,101 +115,13 @@ export const AiFinderView = ({
   const [isProcessing, setIsProcessing] = useState(false);
   const [currentStepIndex, setCurrentStepIndex] = useState(0);
   const [activeScenarioId, setActiveScenarioId] = useState("scenario-led");
-  const processingSteps = [
-    "Parsing technical specification clauses & semantic tokens...",
-    "Identifying primary product category & BIS Technical Committee jurisdiction...",
-    "Correlating electrical, mechanical, environmental & safety parameters...",
-    "Cross-referencing 25,000+ Bureau of Indian Standards (BIS) Gazette records...",
-    "Evaluating normative cross-references, test protocols & lab test methods...",
-    "Auditing supersession & outdated legacy standards (IS 1944 / IS 12269 / IS 2925:1975)...",
-    "Synthesizing mandatory Quality Control Orders (QCO) & GFR 2017 compliance report..."
-  ];
-  const demoScenarios = [
-    {
-      id: "scenario-led",
-      title: "Smart LED Street Lighting RFP",
-      subtitle: "City Municipal Corporation Tender with Ingress & Photobiological Requirements",
-      badge: "High Impact Demo",
-      badgeColor: "bg-blue-100 text-[#1e40af] border-blue-200",
-      highlights: ["IS 10322 (Part 5/Sec 3)", "IS 16107 (Part 2/Sec 1)", "IS 15885 (Driver)", "Outdated IS 1944 Auto-Fix", "440V Grid Gap Alert"],
-      type: "Tender Specification",
-      lang: "English",
-      query: `TENDER SPECIFICATION: Supply, Installation, Testing and Commissioning of 10,000 Nos. Outdoor LED Street Light Luminaires (90W and 120W) for Municipal Smart City Road Network.
-1. Electrical & Optical Requirements:
-   - System Efficacy: Minimum 120 Lumens/Watt at 5700K Correlated Colour Temperature (CCT), CRI >= 70.
-   - Operating Voltage: 140V to 280V AC, 50 Hz. Must withstand 440V AC phase-to-phase high voltage condition.
-   - Power Factor: >= 0.95, Total Harmonic Distortion (THD) <= 10%.
-   - Ingress Protection: Minimum IP66 protection for optical and control gear compartments. Impact resistance IK08.
-   - Surge Protection: Inbuilt 10 kV / 5 kA surge protection device (SPD).
-2. Referenced Standards in Legacy Draft:
-   - Luminaire construction per IS 1944:1970 and IS 10322.
-   - Mandatory BIS CRS Registration and Quality Control Order compliance under MeitY Gazette notification.`
-    },
-    {
-      id: "scenario-transformer",
-      title: "1000 kVA Distribution Transformer",
-      subtitle: "State Electricity Board Substation RFP with BEE Loss Limits",
-      badge: "Heavy Engineering",
-      badgeColor: "bg-indigo-100 text-indigo-800 border-indigo-200",
-      highlights: ["IS 1180 (Part 1):2014", "IS 335 (Insulating Oil)", "CPRI Dynamic Short Circuit Mandate", "BEE Star Level"],
-      type: "Tender Specification",
-      lang: "English",
-      query: `TENDER SPECIFICATION: Supply of 1000 kVA, 11 kV / 433 V, 3-Phase, 50 Hz Outdoor Type Mineral Oil Immersed Step-Down Distribution Transformers.
-1. Rating & Losses: 1000 kVA, Dyn11 vector group, maximum total losses at 50% load <= 2000W, at 100% load <= 6500W (BEE 3-Star level).
-2. Core & Windings: Prime grade CRGO laser scribed electrical steel, electrolytic copper winding with Class A insulation.
-3. Transformer Oil: High grade uninhibited mineral insulating oil conforming to IS 335:2018 with dielectric breakdown voltage >= 60 kV.
-4. Mandatory Compliance: Valid BIS ISI Mark license under IS 1180 (Part 1):2014. Dynamic Short Circuit test certificate from CPRI/ERDA required.`
-    },
-    {
-      id: "scenario-helmet",
-      title: "Industrial Safety Helmets (PPE)",
-      subtitle: "Underground Metro Rail Tunneling & Mining Worker Safety Gear",
-      badge: "Personal Protective Equipment",
-      badgeColor: "bg-amber-100 text-amber-900 border-amber-200",
-      highlights: ["IS 2925:1984", "5.0 kN Shock Attenuation", "2000V Dielectric Test", "Legacy IS 2925:1975 Warning"],
-      type: "Technical Specification",
-      lang: "English",
-      query: `TECHNICAL SPECIFICATION: Supply of 5000 Nos. Industrial Safety Helmets (Non-Metallic) for Underground Metro Rail Tunneling and High-Risk Infrastructure Construction.
-1. Shell: Non-metallic high density polyethylene (HDPE) shell with UV stabilization and 6-point textile suspension cradle.
-2. Performance Criteria:
-   - Impact Attenuation: Transmitted force shall not exceed 5.0 kN when tested as per BIS norms.
-   - Penetration Resistance: Pointed 3 kg steel conical striker drop test compliance.
-   - Electrical Insulation: High voltage resistance test at 2000V AC with leakage current <= 1.2 mA.
-3. Certification: Mandatory ISI Mark under IS 2925 with valid BIS license number. Reference to obsolete IS 2925:1975 noted in annexure.`
-    },
-    {
-      id: "scenario-cement",
-      title: "OPC 53 Grade Structural Cement",
-      subtitle: "National Highway Expressways & Prestressed Concrete Bridge Girders",
-      badge: "Civil Infrastructure",
-      badgeColor: "bg-slate-100 text-slate-800 border-slate-300",
-      highlights: ["IS 269:2015", "53 MPa 28-Day Strength", "Superseded IS 12269/8112 Unification", "Mandatory ISI Bag Marking"],
-      type: "Product Description",
-      lang: "English",
-      query: `TECHNICAL REQUIREMENT: Procurement of 25,000 Metric Tonnes of Ordinary Portland Cement (OPC 53 Grade) for Highway Bridge Superstructure and Prestressed Concrete Girders.
-- 28-day Compressive Strength minimum 53 MPa (IS 12269:1987 referenced in contractor submission).
-- Initial setting time >= 30 minutes, Final setting time <= 600 minutes.
-- Blaine fineness minimum 225 m\xB2/kg, Soundness Le-Chatelier expansion <= 10 mm.
-- Mandatory BIS ISI certification mark on every 50 kg HDPE bag.`
-    },
-    {
-      id: "scenario-hindi",
-      title: "\u{1F1EE}\u{1F1F3} \u090F\u0932\u0908\u0921\u0940 \u0938\u094D\u091F\u094D\u0930\u0940\u091F \u0932\u093E\u0907\u091F \u0916\u0930\u0940\u0926 (Hindi Query)",
-      subtitle: "\u092D\u093E\u0930\u0924\u0940\u092F \u092E\u093E\u0928\u0915 \u0916\u094B\u091C - \u092A\u094D\u0930\u093E\u0915\u0943\u0924\u093F\u0915 \u092D\u093E\u0937\u093E \u0939\u093F\u0928\u094D\u0926\u0940 \u092A\u094D\u0930\u0936\u094D\u0928",
-      badge: "Multi-Lingual NLP",
-      badgeColor: "bg-emerald-100 text-emerald-900 border-emerald-200",
-      highlights: ["IS 10322 (Part 5/Sec 3)", "IS 16107 (LED)", "\u0905\u0928\u093F\u0935\u093E\u0930\u094D\u092F \u092C\u0940\u0906\u0908\u090F\u0938 \u092A\u094D\u0930\u092E\u093E\u0923\u0928", "120 lm/W \u0926\u0915\u094D\u0937\u0924\u093E"],
-      type: "Natural Language Query",
-      lang: "Hindi",
-      query: `\u090F\u0932\u0908\u0921\u0940 \u0938\u094D\u091F\u094D\u0930\u0940\u091F \u0932\u093E\u0907\u091F \u0915\u0947 \u0932\u093F\u090F \u0915\u094C\u0928 \u0938\u0947 \u092D\u093E\u0930\u0924\u0940\u092F \u092E\u093E\u0928\u0915 \u0932\u093E\u0917\u0942 \u0939\u0948\u0902? \u0928\u0917\u0930 \u092A\u093E\u0932\u093F\u0915\u093E \u0915\u0940 \u0938\u0921\u093C\u0915\u094B\u0902 \u0915\u0947 \u0932\u093F\u090F 1000 \u090F\u0932\u0908\u0921\u0940 \u0938\u094D\u091F\u094D\u0930\u0940\u091F \u0932\u093E\u0907\u091F\u094B\u0902 \u0915\u0940 \u0916\u0930\u0940\u0926 \u0915\u0930\u0928\u0940 \u0939\u0948 \u091C\u093F\u0938\u092E\u0947\u0902 \u0928\u094D\u092F\u0942\u0928\u0924\u092E 120 \u0932\u0941\u092E\u0947\u0928/\u0935\u093E\u091F \u0926\u0915\u094D\u0937\u0924\u093E, \u0906\u0908\u092A\u094066 \u091C\u0932\u0930\u094B\u0927\u0915 \u0938\u0941\u0930\u0915\u094D\u0937\u093E, 10 \u0915\u0947\u0935\u0940 \u0938\u0930\u094D\u091C \u092A\u094D\u0930\u094B\u091F\u0947\u0915\u094D\u0936\u0928 \u0914\u0930 \u092C\u0940\u0906\u0908\u090F\u0938 (BIS) \u0905\u0928\u093F\u0935\u093E\u0930\u094D\u092F \u092A\u094D\u0930\u092E\u093E\u0923\u0928 \u0936\u093E\u092E\u093F\u0932 \u0939\u094B\u0928\u093E \u091A\u093E\u0939\u093F\u090F\u0964`
-    }
-  ];
+
   useEffect(() => {
     if (initialQuery) {
       setInputText(initialQuery);
     } else if (!inputText) {
-      setInputText(demoScenarios[0].query);
-      setActiveScenarioId(demoScenarios[0].id);
+      setInputText(DEMO_SCENARIOS[0].query);
+      setActiveScenarioId(DEMO_SCENARIOS[0].id);
     }
   }, [initialQuery]);
   const liveTelemetry = useMemo(() => {
@@ -165,12 +168,12 @@ export const AiFinderView = ({
   }, [inputText]);
   const handleStartAnalysis = (e) => {
     if (e) e.preventDefault();
-    const textToAnalyze = inputText.trim() || demoScenarios[0].query;
+    const textToAnalyze = inputText.trim() || DEMO_SCENARIOS[0].query;
     setIsProcessing(true);
     setCurrentStepIndex(0);
     const interval = setInterval(() => {
       setCurrentStepIndex((prev) => {
-        if (prev < processingSteps.length - 1) {
+        if (prev < PROCESSING_STEPS.length - 1) {
           return prev + 1;
         } else {
           clearInterval(interval);
@@ -255,7 +258,7 @@ export const AiFinderView = ({
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-3">
-          {demoScenarios.map((scenario) => {
+          {DEMO_SCENARIOS.map((scenario) => {
     const isSelected = activeScenarioId === scenario.id;
     return <button
       key={scenario.id}
@@ -309,7 +312,7 @@ export const AiFinderView = ({
                 </h3>
               </div>
               <p className="text-xs font-bold text-[#1e40af] bg-blue-50 py-2 px-4 rounded-full border border-blue-200 inline-block shadow-2xs">
-                {processingSteps[currentStepIndex]}
+                {PROCESSING_STEPS[currentStepIndex]}
               </p>
             </div>
 
@@ -317,7 +320,7 @@ export const AiFinderView = ({
       /* Step progress indicators */
     }
             <div className="space-y-2 text-left pt-2 max-w-md mx-auto bg-slate-50 p-4 rounded-xl border border-slate-200">
-              {processingSteps.map((step, idx) => <div key={idx} className="flex items-center gap-2.5 text-xs">
+              {PROCESSING_STEPS.map((step, idx) => <div key={idx} className="flex items-center gap-2.5 text-xs">
                   {idx < currentStepIndex ? <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0" /> : idx === currentStepIndex ? <div className="w-4 h-4 rounded-full border-2 border-[#1e40af] border-t-transparent animate-spin shrink-0" /> : <div className="w-4 h-4 rounded-full bg-slate-200 shrink-0" />}
                   <span className={idx === currentStepIndex ? "font-bold text-[#0f172a]" : idx < currentStepIndex ? "text-slate-600 line-through" : "text-slate-400"}>
                     {step}

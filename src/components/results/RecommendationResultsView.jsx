@@ -28,36 +28,67 @@ export const RecommendationResultsView = ({
   const [copiedClauseId, setCopiedClauseId] = useState(null);
   const [appliedFix, setAppliedFix] = useState(false);
   const [expandedStandardId, setExpandedStandardId] = useState(null);
-  const primaryRecs = report.recommendations.filter((r) => r.standard.category === "Product Standard" || r.matchLevel === "Highly Relevant" || r.relevanceScore >= 88);
-  const alliedRecs = report.alliedRecommendations.length > 0 ? report.alliedRecommendations : report.recommendations.filter((r) => r.standard.category === "Allied Standard" || r.relevanceScore >= 70 && r.relevanceScore < 88);
-  const testRecs = report.testMethodStandards.map((std) => ({
-    standard: std,
-    relevanceScore: 88,
-    matchLevel: "Relevant",
-    whyRecommended: `Mandatory laboratory test method prescribed for evaluating ${report.identifiedProduct} compliance.`,
-    matchedPhrases: ["Test Protocols", "Laboratory Methods"],
-    matchBreakdown: { categoryMatch: 90, technicalRequirementMatch: 85, safetyMatch: 88, normativeMatch: 90 },
-    applicableClauses: ["Clause 5.1: Sampling and Criteria for Conformity", "Clause 7.2: Type Testing & Routine Tests"]
-  }));
-  const safetyRecs = report.safetyStandards.map((std) => ({
-    standard: std,
-    relevanceScore: 92,
-    matchLevel: "Highly Relevant",
-    whyRecommended: `Critical safety standard addressing operational hazards, user protection, and environmental resistance.`,
-    matchedPhrases: ["Safety Requirements", "Ingress Protection", "Shock Protection"],
-    matchBreakdown: { categoryMatch: 95, technicalRequirementMatch: 90, safetyMatch: 98, normativeMatch: 92 },
-    applicableClauses: ["Clause 4.1: Protection Against Electric Shock", "Clause 6.3: Mechanical Strength & Impact Resistance"]
-  }));
-  const normativeRecs = report.normativeStandards.map((std) => ({
-    standard: std,
-    relevanceScore: 85,
-    matchLevel: "Relevant",
-    whyRecommended: `Normative cross-referenced Indian Standard indispensable for the application of ${report.recommendations[0]?.standard.isNumber || "primary standard"}.`,
-    matchedPhrases: ["Normative Reference", "Cross-referenced Standard"],
-    matchBreakdown: { categoryMatch: 85, technicalRequirementMatch: 85, safetyMatch: 80, normativeMatch: 95 },
-    applicableClauses: ["Clause 2: Normative References"]
-  }));
-  const filteredRecs = selectedTab === "all" ? report.recommendations : selectedTab === "primary" ? primaryRecs.length > 0 ? primaryRecs : report.recommendations.slice(0, 3) : selectedTab === "allied" ? alliedRecs : selectedTab === "test" ? testRecs : selectedTab === "safety" ? safetyRecs : selectedTab === "normative" ? normativeRecs : report.recommendations;
+  const createRecs = (standards, relevanceScore, matchLevel, why, matchedPhrases, breakdown, clauses) =>
+    (standards || []).map((standard) => ({
+      standard,
+      relevanceScore,
+      matchLevel,
+      whyRecommended: why,
+      matchedPhrases,
+      matchBreakdown: breakdown,
+      applicableClauses: clauses
+    }));
+
+  const primaryRecs = report.recommendations.filter(
+    (r) => r.standard.category === "Product Standard" || r.matchLevel === "Highly Relevant" || r.relevanceScore >= 88
+  );
+
+  const alliedRecs = report.alliedRecommendations?.length > 0
+    ? report.alliedRecommendations
+    : report.recommendations.filter(
+        (r) => r.standard.category === "Allied Standard" || (r.relevanceScore >= 70 && r.relevanceScore < 88)
+      );
+
+  const testRecs = createRecs(
+    report.testMethodStandards,
+    88,
+    "Relevant",
+    `Mandatory laboratory test method prescribed for evaluating ${report.identifiedProduct} compliance.`,
+    ["Test Protocols", "Laboratory Methods"],
+    { categoryMatch: 90, technicalRequirementMatch: 85, safetyMatch: 88, normativeMatch: 90 },
+    ["Clause 5.1: Sampling and Criteria for Conformity", "Clause 7.2: Type Testing & Routine Tests"]
+  );
+
+  const safetyRecs = createRecs(
+    report.safetyStandards,
+    92,
+    "Highly Relevant",
+    `Critical safety standard addressing operational hazards, user protection, and environmental resistance.`,
+    ["Safety Requirements", "Ingress Protection", "Shock Protection"],
+    { categoryMatch: 95, technicalRequirementMatch: 90, safetyMatch: 98, normativeMatch: 92 },
+    ["Clause 4.1: Protection Against Electric Shock", "Clause 6.3: Mechanical Strength & Impact Resistance"]
+  );
+
+  const normativeRecs = createRecs(
+    report.normativeStandards,
+    85,
+    "Relevant",
+    `Normative cross-referenced Indian Standard indispensable for the application of ${report.recommendations[0]?.standard.isNumber || "primary standard"}.`,
+    ["Normative Reference", "Cross-referenced Standard"],
+    { categoryMatch: 85, technicalRequirementMatch: 85, safetyMatch: 80, normativeMatch: 95 },
+    ["Clause 2: Normative References"]
+  );
+
+  const tabFilterMap = {
+    all: report.recommendations,
+    primary: primaryRecs.length > 0 ? primaryRecs : report.recommendations.slice(0, 3),
+    allied: alliedRecs,
+    test: testRecs,
+    safety: safetyRecs,
+    normative: normativeRecs
+  };
+
+  const filteredRecs = tabFilterMap[selectedTab] || report.recommendations;
   const handleCopyClause = (text, id) => {
     navigator.clipboard.writeText(text);
     setCopiedClauseId(id);
